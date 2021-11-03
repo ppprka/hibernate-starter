@@ -11,7 +11,6 @@
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
-    <mapping class="com.innowise.danko.entity.User"/>
     <mapping class="com.innowise.danko.entity.Student"/>
     <mapping class="com.innowise.danko.entity.StudentGroup"/>
     <mapping class="com.innowise.danko.entity.RecordBook"/>

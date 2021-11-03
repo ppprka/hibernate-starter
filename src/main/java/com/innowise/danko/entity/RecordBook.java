@@ -16,17 +16,18 @@ import javax.persistence.*;
 public class RecordBook {
 
     @Id
-    /*@SequenceGenerator(name="hibernateSeq", sequenceName = "HIBERNATE_SEQUENCE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hibernateSeq")*/
-    @GeneratedValue(strategy=GenerationType.SEQUENCE,
-            generator="hibernateSeq")
-    @SequenceGenerator(name="hibernateSeq",
-            sequenceName="studentsdatabase.hibernate_sequence")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="hibernateSeq")
+    @SequenceGenerator(name="hibernateSeq", sequenceName="studentsdatabase.hibernate_sequence")
     private Long id;
 
     @Column(name="graduation_year")
     private String graduationYear;
 
     @Column(name="group_id")
-    private Integer groupId;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", table = "student_group")
+    private StudentGroup studentGroup;
+
+    @OneToOne(optional = false, mappedBy = "recordBook")
+    private Student student;
 }
