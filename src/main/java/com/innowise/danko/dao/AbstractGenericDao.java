@@ -2,6 +2,8 @@
 
 import com.innowise.danko.util.SessionFactoryProvider;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -29,25 +31,27 @@ public abstract class AbstractGenericDao<E> implements GenericDao<E> {
     @Override
     public void save(E entity) {
         try(Session session = SessionFactoryProvider.getSessionFactory().openSession()) {
-            session.getSession().save(entity);
-        } catch (Exception e){
-            throw new RuntimeException();
+            Transaction tx1 = session.beginTransaction();
+            session.save(entity);
+            tx1.commit();
         }
     }
 
     @Override
     public void saveOrUpdate(E entity) {
         try(Session session = SessionFactoryProvider.getSessionFactory().openSession()) {
-            session.getSession().saveOrUpdate(entity);
-        } catch (Exception e){
-            throw new RuntimeException();
+            Transaction tx1 = session.beginTransaction();
+            session.saveOrUpdate(entity);
+            tx1.commit();
         }
     }
 
     @Override
     public void delete(E entity) {
         try(Session session = SessionFactoryProvider.getSessionFactory().openSession()) {
-            session.getSession().delete(entity);
+            Transaction tx1 = session.beginTransaction();
+            session.delete(entity);
+            tx1.commit();
         } catch (Exception e){
             throw new RuntimeException();
         }
@@ -56,10 +60,12 @@ public abstract class AbstractGenericDao<E> implements GenericDao<E> {
     @Override
     public void deleteAll() {
         try(Session session = SessionFactoryProvider.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
             List<E> entities = findAll();
             for (E entity : entities) {
-                session.getSession().delete(entity);
+                session.delete(entity);
             }
+            tx1.commit();
         } catch (Exception e){
             throw new RuntimeException();
         }
