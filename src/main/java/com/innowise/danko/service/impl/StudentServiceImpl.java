@@ -3,6 +3,7 @@ package com.innowise.danko.service.impl;
 import com.innowise.danko.dao.StudentDao;
 import com.innowise.danko.entity.Student;
 import com.innowise.danko.service.StudentService;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
@@ -10,11 +11,9 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentDao studentDao;
-    private final SessionFactory sessionFactory;
 
-    public StudentServiceImpl(StudentDao studentDao, SessionFactory sessionFactory) {
+    public StudentServiceImpl(StudentDao studentDao) {
         this.studentDao = studentDao;
-        this.sessionFactory = sessionFactory;
     }
 
     @Override
